@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Shakti Enterprises – Sambasivam Venkatkumar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+
+  :root {
+    --crimson: #8b0000;
+    --crimson-light: #b30000;
+    --crimson-pale: #fdf0f0;
+    --gold: #c9a84c;
+    --gold-light: #e8c97e;
+    --dark: #1a1010;
+    --mid: #4a3535;
+    --muted: #9e8888;
+    --surface: #fefcfc;
+    --border: rgba(139,0,0,0.12);
+    --card-shadow: 0 2px 24px rgba(139,0,0,0.08), 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  body {
+    background: #f0e8e8;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    padding: 0;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  /* Hero band */
+  .hero {
+    background: var(--crimson);
+    padding: 44px 28px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.12);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    pointer-events: none;
+  }
+
+  .hero-top {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+
+  .logo-wrap {
+    flex-shrink: 0;
+    width: 80px; height: 80px;
+    border-radius: 18px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    overflow: hidden;
+    animation: floatLogo 3.5s ease-in-out infinite;
+  }
+
+  .logo-wrap img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    border-radius: 18px;
+  }
+
+  /* fallback monogram if logo.png not found */
+  .logo-mono {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--crimson);
+    line-height: 1;
+  }
+
+  .hero-meta {
+    flex: 1;
+  }
+
+  .designation-tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.22);
+    color: var(--gold-light);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+
+  .person-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.3;
+    margin-bottom: 0;
+  }
+
+  /* BIG brand names */
+  .brand-block {
+    margin-bottom: 18px;
+  }
+
+  .company-name-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 0px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+
+  .sub-brand-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .sub-brand-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold-light);
+    flex-shrink: 0;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .divider-gold {
+    width: 56px; height: 2.5px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    border-radius: 2px;
+    margin: 14px 0;
+  }
+
+  /* Overlap card */
+  .action-card {
+    background: white;
+    border-radius: 28px 28px 0 0;
+    margin-top: -28px;
+    position: relative;
+    z-index: 2;
+    padding: 28px 20px 8px;
+    box-shadow: 0 -4px 30px rgba(139,0,0,0.08);
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    padding-left: 4px;
+  }
+
+  /* Buttons grid */
+  .btn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .btn-grid-full {
+    grid-column: 1 / -1;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 16px;
+    border-radius: 16px;
+    border: 1.5px solid var(--border);
+    background: var(--crimson-pale);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 56px;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+    background: #f5e0e0;
+  }
+
+  .btn-icon {
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 4px rgba(139,0,0,0.10);
+  }
+
+  .btn-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    line-height: 1.2;
+  }
+
+  .btn-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  .btn-sub {
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .btn-save {
+    background: var(--crimson);
+    border-color: var(--crimson);
+    color: white;
+  }
+
+  .btn-save .btn-icon {
+    background: rgba(255,255,255,0.18);
+    box-shadow: none;
+  }
+
+  .btn-save .btn-label,
+  .btn-save .btn-sub {
+    color: rgba(255,255,255,0.95);
+  }
+
+  .btn-save .btn-sub {
+    color: rgba(255,255,255,0.65);
+  }
+
+  .btn-save:active {
+    background: var(--crimson-light);
+  }
+
+  /* Gallery */
+  .gallery-section {
+    padding: 8px 20px 0;
+    background: white;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .gallery-item {
+    aspect-ratio: 1;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--crimson-pale);
+    border: 1px solid var(--border);
+  }
+
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 20px 20px 36px;
+    background: white;
+    text-align: center;
+  }
+
+  .footer-text {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-logo-mark {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--crimson);
+    border-radius: 50%;
+    margin: 0 6px;
+    vertical-align: middle;
+    opacity: 0.4;
+  }
+
+  /* Popups */
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,16,16,0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 100;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .popup-overlay.open {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .popup-sheet {
+    background: white;
+    border-radius: 24px 24px 0 0;
+    width: 100%;
+    max-width: 430px;
+    padding: 12px 20px 40px;
+    animation: slideUp 0.3s cubic-bezier(0.32,0.72,0,1);
+  }
+
+  .popup-handle {
+    width: 36px; height: 4px;
+    background: #e0d4d4;
+    border-radius: 4px;
+    margin: 0 auto 20px;
+  }
+
+  .popup-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .popup-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 15px 18px;
+    margin-bottom: 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    background: var(--crimson-pale);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dark);
+    cursor: pointer;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.18s;
+  }
+
+  .popup-btn:active {
+    transform: scale(0.98);
+    background: #f5e0e0;
+  }
+
+  .popup-btn-icon {
+    width: 38px; height: 38px;
+    border-radius: 12px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 1px 4px rgba(139,0,0,0.10);
+    flex-shrink: 0;
+  }
+
+  .popup-close {
+    background: var(--crimson);
+    color: white;
+    border-color: var(--crimson);
+    justify-content: center;
+    margin-top: 6px;
+  }
+
+  .popup-close:active {
+    background: var(--crimson-light);
+  }
+
+  /* Franchise tags */
+  .franchise-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .franchise-tag {
+    background: var(--crimson-pale);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+    cursor: default;
+  }
+
+  /* Animations */
+  @keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <div class="logo-wrap">
+        <img src="logo.png" alt="Shakti Enterprises Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="logo-mono" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;">SE</div>
+      </div>
+      <div class="hero-meta">
+        <div class="designation-tag">Director</div>
+        <div class="person-name">Sambasivam Venkatkumar</div>
+      </div>
+    </div>
+
+    <div class="brand-block">
+      <div class="company-name-big">Shakti Enterprises</div>
+      <div class="divider-gold"></div>
+      <div class="sub-brand-big">
+        <div class="sub-brand-dot"></div>
+        Salem RR Biriyani 🍽️
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTION CARD -->
+  <div class="action-card">
+    <div class="section-label">Quick Actions</div>
+
+    <div class="btn-grid">
+
+      <button class="btn" onclick="openPopup('franchise')">
+        <div class="btn-icon">🏢</div>
+        <div class="btn-text">
+          <span class="btn-label">Franchises</span>
+          <span class="btn-sub">6 locations</span>
+        </div>
+      </button>
+
+      <button class="btn" onclick="openPopup('call')">
+        <div class="btn-icon">📞</div>
+        <div class="btn-text">
+          <span class="btn-label">Call</span>
+          <span class="btn-sub">2 numbers</span>
+        </div>
+      </button>
+
+      <a href="mailto:shaktienterpriseschennai@gmail.com" class="btn">
+        <div class="btn-icon">📧</div>
+        <div class="btn-text">
+          <span class="btn-label">Email</span>
+          <span class="btn-sub">Send a message</span>
+        </div>
+      </a>
+
+      <button class="btn" onclick="openPopup('whatsapp')">
+        <div class="btn-icon">💬</div>
+        <div class="btn-text">
+          <span class="btn-label">WhatsApp</span>
+          <span class="btn-sub">Chat now</span>
+        </div>
+      </button>
+
+      <button class="btn" onclick="shareProfile()">
+        <div class="btn-icon">📤</div>
+        <div class="btn-text">
+          <span class="btn-label">Share</span>
+          <span class="btn-sub">Share profile</span>
+        </div>
+      </button>
+
+      <a href="https://www.google.com/maps/place/Salem+RR+Biriyani+Food+Factory/" target="_blank" class="btn">
+        <div class="btn-icon">📍</div>
+        <div class="btn-text">
+          <span class="btn-label">Directions</span>
+          <span class="btn-sub">Find us</span>
+        </div>
+      </a>
+
+      <a href="./shakti-enterprises.vcf" class="btn btn-save btn-grid-full">
+        <div class="btn-icon">💾</div>
+        <div class="btn-text">
+          <span class="btn-label">Save Contact</span>
+          <span class="btn-sub">Add to your phone</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="gallery-section">
+    <div class="section-label" style="padding: 16px 4px 10px;">Gallery</div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="gallery1.jpg" alt="Gallery 1"></div>
+      <div class="gallery-item"><img src="gallery2.jpg" alt="Gallery 2"></div>
+      <div class="gallery-item"><img src="gallery3.jpg" alt="Gallery 3"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-text">
+      Powered by<span class="footer-logo-mark"></span>Shakti Enterprises
+    </span>
+  </div>
+
+</div>
+
+<!-- CALL POPUP -->
+<div class="popup-overlay" id="popup-call" onclick="closeIfOverlay(event,'popup-call')">
+  <div class="popup-sheet">
+    <div class="popup-handle"></div>
+    <div class="popup-title">Select Number</div>
+
+    <button class="popup-btn" onclick="window.location.href='tel:9159788888'">
+      <div class="popup-btn-icon">📞</div>
+      9159788888
+    </button>
+    <button class="popup-btn" onclick="window.location.href='tel:9444932134'">
+      <div class="popup-btn-icon">📞</div>
+      9444932134
+    </button>
+    <button class="popup-btn popup-close" onclick="closePopup('call')">
+      Close
+    </button>
+  </div>
+</div>
+
+<!-- WHATSAPP POPUP -->
+<div class="popup-overlay" id="popup-whatsapp" onclick="closeIfOverlay(event,'popup-whatsapp')">
+  <div class="popup-sheet">
+    <div class="popup-handle"></div>
+    <div class="popup-title">WhatsApp</div>
+
+    <button class="popup-btn" onclick="window.open('https://wa.me/919159788888')">
+      <div class="popup-btn-icon">💬</div>
+      9159788888
+    </button>
+    <button class="popup-btn" onclick="window.open('https://wa.me/919444932134')">
+      <div class="popup-btn-icon">💬</div>
+      9444932134
+    </button>
+    <button class="popup-btn popup-close" onclick="closePopup('whatsapp')">
+      Close
+    </button>
+  </div>
+</div>
+
+<!-- FRANCHISE POPUP -->
+<div class="popup-overlay" id="popup-franchise" onclick="closeIfOverlay(event,'popup-franchise')">
+  <div class="popup-sheet">
+    <div class="popup-handle"></div>
+    <div class="popup-title">Our Franchises</div>
+
+    <div class="franchise-grid">
+      <div class="franchise-tag">📍 Chennai</div>
+      <div class="franchise-tag">📍 Chengalpattu</div>
+      <div class="franchise-tag">📍 Kanchipuram</div>
+      <div class="franchise-tag">📍 Tiruvallur</div>
+      <div class="franchise-tag">📍 Trichy</div>
+      <div class="franchise-tag">📍 Dindigul</div>
+    </div>
+
+    <button class="popup-btn popup-close" onclick="closePopup('franchise')">
+      Close
+    </button>
+  </div>
+</div>
+
+<script>
+  function openPopup(name) {
+    document.getElementById('popup-' + name).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePopup(name) {
+    document.getElementById('popup-' + name).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeIfOverlay(e, name) {
+    if (e.target === document.getElementById(name)) {
+      closePopup(name);
+    }
+  }
+
+  async function shareProfile() {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Shakti Enterprises',
+          text: 'Connect with Sambasivam Venkatkumar – Director, Shakti Enterprises',
+          url: window.location.href
+        });
+      } catch(e) {}
+    } else {
+      navigator.clipboard?.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  }
+</script>
+
+</body>
+</html>
